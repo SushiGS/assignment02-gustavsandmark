@@ -40,3 +40,40 @@ export const randomGeneratedClientEditPayload = (existingClientPayload: object) 
         telephone: faker.phone.number()
     };
 };
+
+export const randomGeneratedNewBillPayload = () => {
+    return {
+        value: faker.number.int({min:500,max:100000}),
+		paid: false
+    };
+};
+
+export const randomGeneratedBillEditPayload = (existingBillPayload: object) => {
+    return {
+        ...existingBillPayload,
+        value: faker.number.int({min:500,max:100000}),
+		paid: true
+    };
+};
+
+export const randomGeneratedNewReservationPayload = () => {
+    return {
+        start: faker.date.soon().toISOString().slice(0, 10),
+        end: faker.date.soon().toISOString().slice(0, 10),
+		client: 1,
+		room: 1,
+		bill: 1
+    };
+};
+
+export const randomGeneratedReservationEditPayload = (existingReservationPayload: object) => {
+    return {
+        ...existingReservationPayload,
+        start: faker.date.soon().toISOString().slice(0, 10),
+        end: faker.date.soon().toISOString().slice(0, 10),
+		client: 2,
+		room: 2,
+		bill: 2
+    };
+};
+
