@@ -1,29 +1,29 @@
 import { APIRequestContext } from "@playwright/test";
 
 export class APIHelper{
-    private baseUrl: string;
+    // private baseUrl: string;
     private auth: string;
 
-    constructor(baseUrl: string){
-        this.baseUrl = baseUrl;
+    constructor(){
+        // this.baseUrl = baseUrl;
     }
 
     //LOGIN/LOGOUT
     async login(request: APIRequestContext, username: string, password: string){
-        const response = (await request.post(`${this.baseUrl}/login`,{data:{username, password}}));
+        const response = (await request.post(`api/login`,{data:{username, password}}));
         const body = await response.json();
         const token = body.token;
         this.auth = JSON.stringify({username, token});
     }
 
     async logout(request: APIRequestContext) {
-        const response = await request.post(`${this.baseUrl}/logout`);
+        const response = await request.post(`api/logout`);
         return response;
     }
 
     async loginWithWrongUsernamePassword(request: APIRequestContext, wrongUsername: string, wrongPassword: string){
-        await request.post(`${this.baseUrl}/logout`);
-        const responselogin = (await request.post(`${this.baseUrl}/login`,{data:{wrongUsername, wrongPassword}}));
+        await request.post(`api/logout`);
+        const responselogin = (await request.post(`api/login`,{data:{wrongUsername, wrongPassword}}));
         const body = await responselogin.json();
         const token = body.token;
         this.auth = JSON.stringify({wrongUsername, wrongPassword});
@@ -32,49 +32,49 @@ export class APIHelper{
 
     //GET
     async getAllRooms(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/rooms`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/rooms`,{headers: {"X-User-Auth": this.auth}});
         return response;
         
     }
 
     async getAllClients(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/clients`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/clients`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getAllBills(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/bills`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/bills`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getAllReservations(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/reservations`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/reservations`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getClientById(request: APIRequestContext, clientId: number) {
-        const response = await request.get(`${this.baseUrl}/client/${clientId}`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/client/${clientId}`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getRoomById(request: APIRequestContext, roomId: number) {
-        const response = await request.get(`${this.baseUrl}/room/${roomId}`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/room/${roomId}`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getBillById(request: APIRequestContext, billId: number) {
-        const response = await request.get(`${this.baseUrl}/bill/${billId}`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/bill/${billId}`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     async getReservationById(request: APIRequestContext, reservationId: number) {
-        const response = await request.get(`${this.baseUrl}/reservation/${reservationId}`,{headers: {"X-User-Auth": this.auth}});
+        const response = await request.get(`api/reservation/${reservationId}`,{headers: {"X-User-Auth": this.auth}});
         return response;
     }
 
     //POST
     async createNewRoom(request: APIRequestContext, payload: object){
-        const response = await request.post(`${this.baseUrl}/room/new`, {
+        const response = await request.post(`api/room/new`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -85,7 +85,7 @@ export class APIHelper{
     }
 
     async createNewClient(request: APIRequestContext, payload: object){
-        const response = await request.post(`${this.baseUrl}/client/new`, {
+        const response = await request.post(`api/client/new`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -96,7 +96,7 @@ export class APIHelper{
     }
 
     async createNewBill(request: APIRequestContext, payload: object){
-        const response = await request.post(`${this.baseUrl}/bill/new`, {
+        const response = await request.post(`api/bill/new`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -107,7 +107,7 @@ export class APIHelper{
     }
 
     async createNewReservation(request: APIRequestContext, payload: object){
-        const response = await request.post(`${this.baseUrl}/reservation/new`, {
+        const response = await request.post(`api/reservation/new`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -119,7 +119,7 @@ export class APIHelper{
 
     //PUT
     async editRoomById(request: APIRequestContext, roomId: number, payload: object) {
-        const response = await request.put(`${this.baseUrl}/room/${roomId}`, {
+        const response = await request.put(`api/room/${roomId}`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -130,7 +130,7 @@ export class APIHelper{
     }
 
     async editClientById(request: APIRequestContext, clientId: number, payload: object){
-        const response = await request.put(`${this.baseUrl}/client/${clientId}`, {
+        const response = await request.put(`api/client/${clientId}`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -141,7 +141,7 @@ export class APIHelper{
     }
 
     async editBillById(request: APIRequestContext, billId: number, payload: object){
-        const response = await request.put(`${this.baseUrl}/bill/${billId}`, {
+        const response = await request.put(`api/bill/${billId}`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -152,7 +152,7 @@ export class APIHelper{
     }
 
     async editReservationById(request: APIRequestContext, reservationId: number, payload: object){
-        const response = await request.put(`${this.baseUrl}/reservation/${reservationId}`, {
+        const response = await request.put(`api/reservation/${reservationId}`, {
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -164,7 +164,7 @@ export class APIHelper{
 
     //DELETE
     async deleteClientById(request: APIRequestContext, clientId: number){
-        const response = await request.delete(`${this.baseUrl}/client/${clientId}`,{
+        const response = await request.delete(`api/client/${clientId}`,{
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -174,7 +174,7 @@ export class APIHelper{
     }
 
     async deleteRoomById(request: APIRequestContext, roomId: number){
-        const response = await request.delete(`${this.baseUrl}/room/${roomId}`,{
+        const response = await request.delete(`api/room/${roomId}`,{
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -184,7 +184,7 @@ export class APIHelper{
     }
 
     async deleteBillById(request: APIRequestContext, billId: number){
-        const response = await request.delete(`${this.baseUrl}/bill/${billId}`,{
+        const response = await request.delete(`api/bill/${billId}`,{
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"
@@ -194,7 +194,7 @@ export class APIHelper{
     }
 
     async deleteReservationById(request: APIRequestContext, reservationId: number){
-        const response = await request.delete(`${this.baseUrl}/reservation/${reservationId}`,{
+        const response = await request.delete(`api/reservation/${reservationId}`,{
             headers: {
                 "X-User-Auth": this.auth,
                 "Content-Type": "application/json"

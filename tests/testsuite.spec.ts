@@ -10,13 +10,13 @@ import { randomGeneratedNewReservationPayload } from './testData';
 import { randomGeneratedReservationEditPayload } from './testData';
 import "dotenv/config";
 
-const BASE_URL= 'http://localhost:3000/api';
+// const BASE_URL= 'http://localhost:3000/api';
 
 test.describe('Test suite backend', () => {
   let apiHelper: APIHelper;
 
   test.beforeAll(async ({request}) => {
-    apiHelper = new APIHelper(BASE_URL);
+    apiHelper = new APIHelper();
     const username = process.env.API_USERNAME ??"";
     const password = process.env.API_PASSWORD ??"";
     await apiHelper.login(request, username, password);
