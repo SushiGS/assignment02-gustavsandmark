@@ -1,12 +1,7 @@
 import { APIRequestContext } from "@playwright/test";
 
 export class APIHelper{
-    // private baseUrl: string;
     private auth: string;
-
-    constructor(){
-        // this.baseUrl = baseUrl;
-    }
 
     //LOGIN/LOGOUT
     async login(request: APIRequestContext, username: string, password: string){

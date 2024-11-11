@@ -10,8 +10,6 @@ import { randomGeneratedNewReservationPayload } from './testData';
 import { randomGeneratedReservationEditPayload } from './testData';
 import "dotenv/config";
 
-// const BASE_URL= 'http://localhost:3000/api';
-
 test.describe('Test suite backend', () => {
   let apiHelper: APIHelper;
 
