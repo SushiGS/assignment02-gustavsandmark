@@ -1,14 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { APIHelper } from './apiHelpers';
-import { randomGeneratedNewRoomPayload } from './testData';
-import { randomGeneratedRoomEditPayload } from './testData';
-import { randomGeneratedNewClientPayload } from './testData';
-import { randomGeneratedClientEditPayload } from './testData';
-import { randomGeneratedNewBillPayload } from './testData';
-import { randomGeneratedBillEditPayload } from './testData';
-import { randomGeneratedNewReservationPayload } from './testData';
-import { randomGeneratedReservationEditPayload } from './testData';
 import "dotenv/config";
+import { PayloadGenerator } from './PayloadGenerator';
+import { APIHelper } from './ApiHelper';
 
 test.describe('Test suite backend', () => {
   let apiHelper: APIHelper;
@@ -20,7 +13,6 @@ test.describe('Test suite backend', () => {
     await apiHelper.login(request, username, password);
   })
 
-  //GET
   test('Get all Rooms', async ({ request }) => {
     const getRooms = await apiHelper.getAllRooms(request);
     expect(getRooms.ok()).toBeTruthy();
@@ -63,7 +55,7 @@ test.describe('Test suite backend', () => {
 
   //POST
   test('Create New Room', async ({ request }) => {
-    const payload = randomGeneratedNewRoomPayload();
+    const payload = PayloadGenerator.randomGeneratedNewRoomPayload();
     const createRoomResponse = await apiHelper.createNewRoom(request, payload);
     expect(createRoomResponse.ok()).toBeTruthy();
 
@@ -93,7 +85,7 @@ test.describe('Test suite backend', () => {
   });
 
   test('Create New Client', async ({ request }) => {
-    const payload = randomGeneratedNewClientPayload();
+    const payload = PayloadGenerator.randomGeneratedNewClientPayload();
     const createClientResponse = await apiHelper.createNewClient(request, payload);
     expect(createClientResponse.ok()).toBeTruthy();
 
@@ -117,7 +109,7 @@ test.describe('Test suite backend', () => {
   });
 
   test('Create New Bill', async ({ request }) => {
-    const payload = randomGeneratedNewBillPayload();
+    const payload = PayloadGenerator.randomGeneratedNewBillPayload();
     const createBillResponse = await apiHelper.createNewBill(request, payload);
     expect(createBillResponse.ok()).toBeTruthy();
 
@@ -139,7 +131,7 @@ test.describe('Test suite backend', () => {
   });
 
   test('Create New Reservation', async ({ request }) => {
-    const payload = randomGeneratedNewReservationPayload();
+    const payload = PayloadGenerator.randomGeneratedNewReservationPayload();
     const createReservationResponse = await apiHelper.createNewReservation(request, payload);
     expect(createReservationResponse.ok()).toBeTruthy();
 
@@ -178,7 +170,7 @@ test.describe('Test suite backend', () => {
     expect(getRoomResponse.ok()).toBeTruthy();
     const existingRoomPayload = await getRoomResponse.json();
 
-    const updatedPayload = randomGeneratedRoomEditPayload(existingRoomPayload);
+    const updatedPayload = PayloadGenerator.randomGeneratedRoomEditPayload(existingRoomPayload);
 
     const editRoomResponse = await apiHelper.editRoomById(request, roomId, updatedPayload);
     expect(editRoomResponse.ok()).toBeTruthy();
@@ -201,7 +193,7 @@ test.describe('Test suite backend', () => {
     expect(getClientresponse.ok()).toBeTruthy();
     const existingClientPayload = await getClientresponse.json();
 
-    const updatedPayload = randomGeneratedClientEditPayload(existingClientPayload);
+    const updatedPayload = PayloadGenerator.randomGeneratedClientEditPayload(existingClientPayload);
 
     const editClientResponse = await apiHelper.editClientById(request, clientId, updatedPayload);
     expect(editClientResponse.ok()).toBeTruthy();
@@ -224,7 +216,7 @@ test.describe('Test suite backend', () => {
     expect(getBillresponse.ok()).toBeTruthy();
     const existingBillPayload = await getBillresponse.json();
 
-    const updatedPayload = randomGeneratedBillEditPayload(existingBillPayload);
+    const updatedPayload = PayloadGenerator.randomGeneratedBillEditPayload(existingBillPayload);
 
     const editBillResponse = await apiHelper.editBillById(request, billId, updatedPayload);
     expect(editBillResponse.ok()).toBeTruthy();
@@ -247,7 +239,7 @@ test.describe('Test suite backend', () => {
     expect(getReservationResponse.ok()).toBeTruthy();
     const existingReservationPayload = await getReservationResponse.json();
 
-    const updatedPayload = randomGeneratedReservationEditPayload(existingReservationPayload);
+    const updatedPayload = PayloadGenerator.randomGeneratedReservationEditPayload(existingReservationPayload);
 
     const editReservationResponse = await apiHelper.editReservationById(request, reservationId, updatedPayload);
     expect(editReservationResponse.ok()).toBeTruthy();
